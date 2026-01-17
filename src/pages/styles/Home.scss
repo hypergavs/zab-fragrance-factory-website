@@ -1,0 +1,45 @@
+#home-page {
+    .announcement-bar {
+        background-color: #f8e1e7;
+        color: #b3002d;
+        text-align: center;
+        padding: 10px 0;
+        font-weight: bold;
+        font-size: 14px;
+    }
+    .main-navigation-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .menu-and-company-logo {
+            display: flex;
+            align-items: center;
+            .company-logo {
+                height: 50px;
+                img {
+                    object-fit: contain;
+                    height: 100%;
+                }
+            }
+            ul.main-navigation {
+                list-style: none;
+                display: flex;
+                ion-button {
+                    &::part(native) {
+                        color: #333;
+                        font-weight: bold;
+                    }
+                }
+            }
+            
+        }
+        .navigation-buttons {
+                ion-button {
+                    &::part(native) {
+                        color: #333;
+                        font-weight: bold;
+                    }
+                }
+            }
+    }
+}

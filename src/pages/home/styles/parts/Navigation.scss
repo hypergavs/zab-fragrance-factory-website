@@ -1,0 +1,82 @@
+.main-navigation-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    position: relative;
+
+    // Mobile/Tablet layout (default)
+    .navigation-menu-button {
+        order: 1;
+
+        ion-button {
+            &::part(native) {
+                color: #333;
+            }
+        }
+    }
+
+    .company-logo {
+        order: 2;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 50px;
+
+        img {
+            object-fit: contain;
+            height: 100%;
+        }
+    }
+
+    ul.main-navigation {
+        display: none; // Hidden on mobile/tablet
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        ion-button {
+            &::part(native) {
+                color: #333;
+                font-weight: bold;
+            }
+        }
+    }
+
+    .navigation-buttons {
+        order: 3;
+        display: flex;
+        gap: 0.25rem;
+
+        ion-button {
+            &::part(native) {
+                color: #333;
+                font-weight: bold;
+            }
+        }
+    }
+
+    // Desktop layout (md and up)
+    @media (min-width: 768px) {
+        .navigation-menu-button {
+            display: none;
+        }
+
+        .company-logo {
+            position: static;
+            transform: none;
+            order: 1;
+        }
+
+        ul.main-navigation {
+            display: flex;
+            order: 2;
+            flex: 1;
+            margin-left: 2rem;
+        }
+
+        .navigation-buttons {
+            order: 3;
+        }
+    }
+}

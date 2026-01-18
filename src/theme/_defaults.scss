@@ -1,0 +1,9 @@
+body {
+    background: #FFF;
+}
+
+ion-content {
+    &::part(background) {
+        background: #FFF;
+    }
+}

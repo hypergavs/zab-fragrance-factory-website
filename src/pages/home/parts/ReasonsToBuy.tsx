@@ -1,4 +1,5 @@
 import { IonGrid, IonRow, IonCol, IonIcon } from '@ionic/react';
+import { forwardRef } from 'react';
 import {
     timeOutline,
     rocketOutline,
@@ -48,9 +49,9 @@ const reasons: Reason[] = [
     }
 ];
 
-export const ReasonsToBuy: React.FC = () => {
+export const ReasonsToBuy = forwardRef<HTMLElement>((props, ref) => {
     return (
-        <section className="reasons-section">
+        <section ref={ref} className="reasons-section">
             <IonGrid>
                 <IonRow>
                     <IonCol size="12">
@@ -82,4 +83,4 @@ export const ReasonsToBuy: React.FC = () => {
             </IonGrid>
         </section>
     )
-}
+});

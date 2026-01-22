@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef } from 'react';
 import { IonSkeletonText } from '@ionic/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
@@ -45,7 +45,7 @@ const images = [
     { full: img8405Full, placeholder: img8405Min },
 ];
 
-export const Jumbotron: React.FC = () => {
+export const Jumbotron = forwardRef<HTMLDivElement>((props, ref) => {
     const [loadedMinified, setLoadedMinified] = useState<Set<number>>(new Set());
     const [loadedFull, setLoadedFull] = useState<Set<number>>(new Set());
     const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
@@ -103,7 +103,7 @@ export const Jumbotron: React.FC = () => {
     }, [loadedMinified, allMinifiedLoaded, swiperInstance]);
 
     return (
-        <div className="jumbotron-container">
+        <div ref={ref} className="jumbotron-container">
             <Swiper
                 modules={[Autoplay, Pagination, Navigation]}
                 spaceBetween={0}
@@ -148,5 +148,5 @@ export const Jumbotron: React.FC = () => {
                 <p>Where every scent tells your story</p>
             </div>
         </div>
-    )
-}
+    );
+});

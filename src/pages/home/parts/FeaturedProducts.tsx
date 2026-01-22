@@ -2,7 +2,7 @@ import { IonGrid, IonRow, IonCol, IonButton, IonIcon } from '@ionic/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 import { heartOutline, heart, cartOutline } from 'ionicons/icons';
-import { useState } from 'react';
+import { useState, forwardRef } from 'react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import '../styles/parts/FeaturedProducts.scss';
@@ -98,7 +98,7 @@ const products: Product[] = [
     }
 ];
 
-export const FeaturedProducts: React.FC = () => {
+export const FeaturedProducts = forwardRef<HTMLElement>((props, ref) => {
     const [favorites, setFavorites] = useState<Set<number>>(new Set());
 
     const toggleFavorite = (productId: number) => {
@@ -114,7 +114,7 @@ export const FeaturedProducts: React.FC = () => {
     };
 
     return (
-        <section className="featured-products-section">
+        <section ref={ref} className="featured-products-section">
             <IonGrid>
                 <IonRow className="ion-justify-content-center">
                     <IonCol size="12" sizeSm="11" sizeMd="10" sizeLg="8">
@@ -210,4 +210,4 @@ export const FeaturedProducts: React.FC = () => {
             </IonGrid>
         </section>
     )
-}
+});

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef } from 'react';
 import { IonGrid, IonRow, IonCol, IonButton } from '@ionic/react';
 import { IonSkeletonText } from '@ionic/react';
 import '../styles/parts/Models.scss';
@@ -39,7 +39,7 @@ const models: ModelData[] = [
     }
 ];
 
-export const Models: React.FC = () => {
+export const Models = forwardRef<HTMLElement>((props, ref) => {
     const [loadedMinified, setLoadedMinified] = useState<Set<number>>(new Set());
     const [loadedFull, setLoadedFull] = useState<Set<number>>(new Set());
 
@@ -61,7 +61,7 @@ export const Models: React.FC = () => {
     }, []);
 
     return (
-        <section className="models-section">
+        <section ref={ref} className="models-section">
             <IonGrid>
                 {models.map((model, index) => (
                     <IonRow key={index} className={`model-row ${model.alignment === 'left' ? 'image-left' : 'image-right'}`}>
@@ -95,4 +95,4 @@ export const Models: React.FC = () => {
             </IonGrid>
         </section>
     )
-}
+});

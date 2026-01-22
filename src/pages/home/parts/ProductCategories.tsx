@@ -1,4 +1,5 @@
 import { IonGrid, IonRow, IonCol, IonButton, IonIcon } from '@ionic/react';
+import { forwardRef } from 'react';
 import { arrowForward, woman, man, sparkles, flameOutline, waterOutline } from 'ionicons/icons';
 import '../styles/parts/ProductCategories.scss';
 
@@ -38,9 +39,9 @@ const categories: Category[] = [
     }
 ];
 
-export const ProductCategories: React.FC = () => {
+export const ProductCategories = forwardRef<HTMLElement>((props, ref) => {
     return (
-        <section className="categories-section">
+        <section ref={ref} className="categories-section">
             <IonGrid>
                 <IonRow className="ion-justify-content-center">
                     <IonCol size="12" sizeSm="11" sizeMd="10" sizeLg="8">
@@ -87,4 +88,4 @@ export const ProductCategories: React.FC = () => {
             </IonGrid>
         </section>
     );
-}
+});

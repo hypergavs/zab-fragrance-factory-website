@@ -16,13 +16,15 @@ const Home: React.FC = () => {
     const productsRef = useRef<HTMLDivElement>(null);
     const reasonsRef = useRef<HTMLDivElement>(null);
     const modelsRef = useRef<HTMLDivElement>(null);
+    const footerRef = useRef<HTMLDivElement>(null);
 
     useScrollAnimations({
         jumbotronRef,
         categoriesRef,
         productsRef,
         reasonsRef,
-        modelsRef
+        modelsRef,
+        footerRef
     });
 
     return (
@@ -37,7 +39,7 @@ const Home: React.FC = () => {
                 <FeaturedProducts ref={productsRef} />
                 <ReasonsToBuy ref={reasonsRef} />
                 <Models ref={modelsRef} />
-                <Footer />
+                <Footer ref={footerRef} />
             </IonContent>
         </IonPage>
     );

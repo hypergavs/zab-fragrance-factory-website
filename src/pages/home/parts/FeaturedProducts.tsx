@@ -3,8 +3,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 import { heartOutline, heart, cartOutline } from 'ionicons/icons';
 import { useState, forwardRef } from 'react';
-import 'swiper/css';
-import 'swiper/css/pagination';
 import '../styles/parts/FeaturedProducts.scss';
 
 interface Product {
@@ -26,7 +24,7 @@ const products: Product[] = [
         description: "A sophisticated blend of amber and sandalwood",
         price: 1299,
         originalPrice: 1599,
-        image: "https://via.placeholder.com/300x400/333/fff?text=Midnight+Elegance",
+        image: "https://placehold.co/300x400/333/fff?text=Midnight+Elegance",
         category: "Women",
         rating: 4.8
     },
@@ -35,7 +33,7 @@ const products: Product[] = [
         name: "Ocean Breeze",
         description: "Fresh aquatic notes with hints of citrus",
         price: 1099,
-        image: "https://via.placeholder.com/300x400/1e90ff/fff?text=Ocean+Breeze",
+        image: "https://placehold.co/300x400/1e90ff/fff?text=Ocean+Breeze",
         category: "Men",
         rating: 4.6
     },
@@ -45,7 +43,7 @@ const products: Product[] = [
         description: "Delicate floral bouquet with a touch of jasmine",
         price: 1499,
         originalPrice: 1799,
-        image: "https://via.placeholder.com/300x400/ff69b4/fff?text=Rose+Garden",
+        image: "https://placehold.co/300x400/ff69b4/fff?text=Rose+Garden",
         category: "Women",
         rating: 4.9
     },
@@ -54,7 +52,7 @@ const products: Product[] = [
         name: "Urban Legend",
         description: "Bold and masculine with woody undertones",
         price: 1399,
-        image: "https://via.placeholder.com/300x400/2f4f4f/fff?text=Urban+Legend",
+        image: "https://placehold.co/300x400/2f4f4f/fff?text=Urban+Legend",
         category: "Men",
         rating: 4.7
     },
@@ -64,7 +62,7 @@ const products: Product[] = [
         description: "Sweet and warm vanilla with caramel notes",
         price: 1199,
         originalPrice: 1499,
-        image: "https://via.placeholder.com/300x400/daa520/fff?text=Vanilla+Dream",
+        image: "https://placehold.co/300x400/daa520/fff?text=Vanilla+Dream",
         category: "Unisex",
         rating: 4.8
     },
@@ -73,7 +71,7 @@ const products: Product[] = [
         name: "Citrus Burst",
         description: "Energizing blend of lemon and bergamot",
         price: 999,
-        image: "https://via.placeholder.com/300x400/ffa500/fff?text=Citrus+Burst",
+        image: "https://placehold.co/300x400/ffa500/fff?text=Citrus+Burst",
         category: "Unisex",
         rating: 4.5
     },
@@ -83,7 +81,7 @@ const products: Product[] = [
         description: "Mysterious and alluring with oud and musk",
         price: 1699,
         originalPrice: 1999,
-        image: "https://via.placeholder.com/300x400/191970/fff?text=Mystic+Noir",
+        image: "https://placehold.co/300x400/191970/fff?text=Mystic+Noir",
         category: "Women",
         rating: 4.9
     },
@@ -92,7 +90,7 @@ const products: Product[] = [
         name: "Fresh Mint",
         description: "Cool and refreshing with green notes",
         price: 899,
-        image: "https://via.placeholder.com/300x400/98fb98/000?text=Fresh+Mint",
+        image: "https://placehold.co/300x400/98fb98/000?text=Fresh+Mint",
         category: "Men",
         rating: 4.4
     }

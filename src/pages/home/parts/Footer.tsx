@@ -1,4 +1,5 @@
 import { IonGrid, IonRow, IonCol, IonButton, IonIcon, IonInput } from '@ionic/react';
+import { forwardRef } from 'react';
 import {
     logoFacebook,
     logoInstagram,
@@ -65,7 +66,7 @@ const socialLinks = [
     { icon: logoTwitter, href: 'https://twitter.com/zabfragrance', label: 'Twitter' }
 ];
 
-export const Footer: React.FC = () => {
+export const Footer = forwardRef<HTMLElement>((props, ref) => {
     const [email, setEmail] = useState('');
 
     const handleNewsletterSubmit = (e: React.FormEvent) => {
@@ -76,7 +77,7 @@ export const Footer: React.FC = () => {
     };
 
     return (
-        <footer className="footer">
+        <footer ref={ref} className="footer">
             {/* Newsletter Section */}
             <div className="footer-newsletter">
                 <IonGrid>
@@ -217,4 +218,4 @@ export const Footer: React.FC = () => {
             </div>
         </footer>
     );
-}
+});

@@ -18,7 +18,7 @@ const categories: Category[] = [
         name: "Perfumes",
         description: "Explore our exclusive perfume collection",
         icon: woman,
-        image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=500&h=600&fit=crop',
+        image: 'https://placehold.co/500x600/ff69b4/fff?text=Perfumes',
         itemCount: 24
     },
     {
@@ -26,7 +26,7 @@ const categories: Category[] = [
         name: 'Diffusers',
         description: 'Transform your space with lasting aromas',
         icon: flameOutline,
-        image: 'https://images.unsplash.com/photo-1602874801006-e75a66a34e9e?w=500&h=600&fit=crop',
+        image: 'https://placehold.co/500x600/ff8c00/fff?text=Diffusers',
         itemCount: 15
     },
     {
@@ -34,7 +34,7 @@ const categories: Category[] = [
         name: 'Scented Alcohol',
         description: 'Premium scented alcohol for every occasion',
         icon: waterOutline,
-        image: 'https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=500&h=600&fit=crop',
+        image: 'https://placehold.co/500x600/4169e1/fff?text=Scented+Alcohol',
         itemCount: 10
     }
 ];

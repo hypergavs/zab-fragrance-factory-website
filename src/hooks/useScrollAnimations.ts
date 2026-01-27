@@ -45,6 +45,31 @@ export const useScrollAnimations = ({
 
             const ctx = gsap.context(() => {
 
+                // Helpers to normalize targets and avoid passing null/empty NodeLists to GSAP
+                const normalizeTargets = (target: any): Element[] => {
+                    if (!target) return [];
+                    // NodeList or HTMLCollection
+                    if (typeof (target.length) === 'number' && !(target instanceof HTMLElement) && !(target instanceof Element)) {
+                        try {
+                            return Array.from(target).filter(Boolean) as Element[];
+                        } catch (e) {
+                            return [];
+                        }
+                    }
+                    if (Array.isArray(target)) return target.filter(Boolean) as Element[];
+                    return [target] as Element[];
+                };
+
+                const safeSet = (target: any, vars: any) => {
+                    const t = normalizeTargets(target);
+                    if (t.length) gsap.set(t, vars);
+                };
+
+                const safeTo = (target: any, vars: any) => {
+                    const t = normalizeTargets(target);
+                    if (t.length) gsap.to(t, vars);
+                };
+
 
                 if (jumbotronRef.current) {
                     gsap.from(jumbotronRef.current, {
@@ -66,10 +91,10 @@ export const useScrollAnimations = ({
                     const cards = categoriesRef.current.querySelectorAll('.category-col');
 
                     // Set initial invisible states BEFORE creating animations
-                    gsap.set([sectionHeader, sectionHeaderSub], { opacity: 0 });
-                    gsap.set(sectionHeader, { x: -30 });
-                    gsap.set(sectionHeaderSub, { y: 20 });
-                    gsap.set(cards, { opacity: 0, y: 50 });
+                    safeSet([sectionHeader, sectionHeaderSub], { opacity: 0 });
+                    safeSet(sectionHeader, { x: -30 });
+                    safeSet(sectionHeaderSub, { y: 20 });
+                    safeSet(cards, { opacity: 0, y: 50 });
 
                     const categoriesTL = gsap.timeline({
                         scrollTrigger: {
@@ -81,17 +106,23 @@ export const useScrollAnimations = ({
                         }
                     });
 
-                    categoriesTL.to(sectionHeader, {
-                        opacity: 1,
-                        x: 0,
-                        duration: .5,
-                        ease: 'power1.out',
-                    }, 0.3).to(sectionHeaderSub, {
-                        opacity: 1,
-                        y: 0,
-                        duration: .5,
-                        ease: 'power1.out',
-                    }, 0.5)
+                    if (sectionHeader) {
+                        categoriesTL.to(sectionHeader, {
+                            opacity: 1,
+                            x: 0,
+                            duration: .5,
+                            ease: 'power1.inOut',
+                        }, 0.3);
+                    }
+
+                    if (sectionHeaderSub) {
+                        categoriesTL.to(sectionHeaderSub, {
+                            opacity: 1,
+                            y: 0,
+                            duration: .5,
+                            ease: 'power1.inOut',
+                        }, 0.5);
+                    }
 
                     // Stagger animate cards when full height of first card is visible
                     cards.forEach(card => {
@@ -107,7 +138,7 @@ export const useScrollAnimations = ({
                             ease: 'power2.inOut',
                         });
                     })
-                    
+
                 }
 
                 // Featured Products
@@ -119,18 +150,12 @@ export const useScrollAnimations = ({
                         scrollTrigger: {
                             trigger: productsRef.current,
                             start: 'top 80%',
-                            toggleActions: 'play none none none',
-                            onUpdate: (self) => {
-                                console.log('Products animation progress:', self.progress);
-                            },
-                            onEnter: () => {
-                                console.log('Entered products section');
-                            }
+                            toggleActions: 'play none none reverse',
                         },
                         opacity: 1,
                         x: 0,
                         duration: 0.8,
-                        ease: 'power2.out',
+                        ease: 'power2.inOut',
                     });
                 }
 
@@ -139,21 +164,21 @@ export const useScrollAnimations = ({
                 // Reasons to Buy
                 if (reasonsRef.current) {
                     const cards = reasonsRef.current.querySelectorAll('.reason-card');
-                    
-                    // Set initial invisible states
-                    gsap.set(reasonsRef.current, { opacity: 0, scale: 0.95 });
-                    gsap.set(cards, { opacity: 0, scale: 0.8 });
 
-                    gsap.to(reasonsRef.current, {
+                    // Set initial invisible states
+                    safeSet(reasonsRef.current, { opacity: 0, scale: 0.95 });
+                    safeSet(cards, { opacity: 0, scale: 0.8 });
+
+                    safeTo(reasonsRef.current, {
                         scrollTrigger: {
                             trigger: reasonsRef.current,
                             start: 'top 80%',
-                            toggleActions: 'play none none none'
+                            toggleActions: 'play none none reverse'
                         },
                         opacity: 1,
                         scale: 1,
                         duration: 0.8,
-                        ease: 'power2.out'
+                        ease: 'power2.inOut'
                     });
 
                     // Reason cards
@@ -163,12 +188,12 @@ export const useScrollAnimations = ({
                                 scrollTrigger: {
                                     trigger: card,
                                     start: 'top 85%',
-                                    toggleActions: 'play none none none'
+                                    toggleActions: 'play none none reverse'
                                 },
                                 opacity: 1,
                                 scale: 1,
                                 duration: 0.6,
-                                ease: 'power2.out'
+                                ease: 'power2.inOut'
                             });
                         });
                     }
@@ -177,33 +202,33 @@ export const useScrollAnimations = ({
                 // Models
                 if (modelsRef.current) {
                     const rows = modelsRef.current.querySelectorAll('.model-row');
-                    
+
                     // Set initial invisible states for section and rows
-                    gsap.set(modelsRef.current, { opacity: 0 });
-                    
+                    safeSet(modelsRef.current, { opacity: 0 });
+
                     // Animate main section first
                     gsap.to(modelsRef.current, {
                         scrollTrigger: {
                             trigger: modelsRef.current,
                             start: 'top 80%',
-                            toggleActions: 'play none none none'
+                            toggleActions: 'play none none reverse'
                         },
                         opacity: 1,
                         duration: 0.8,
-                        ease: 'power2.out'
+                        ease: 'power2.inOut'
                     });
 
                     // Model rows - animate each with alternating slide direction
                     if (rows.length > 0) {
                         rows.forEach((row, index) => {
                             const fromLeft = index % 2 === 0;
-                            
+
                             // Set initial state based on alternating direction
-                            gsap.set(row, { 
-                                opacity: 0, 
-                                x: fromLeft ? -80 : 80 
+                            gsap.set(row, {
+                                opacity: 0,
+                                x: fromLeft ? -80 : 80
                             });
-                            
+
                             gsap.to(row, {
                                 scrollTrigger: {
                                     trigger: row,
@@ -228,18 +253,18 @@ export const useScrollAnimations = ({
                     const contactItems = footerRef.current.querySelectorAll('.contact-item');
                     const footerLinksItems = footerRef.current.querySelectorAll('.footer-links ul li, .footer-policies ul li');
                     const bottomBar = footerRef.current.querySelector('.footer-bottom');
-                    
+
                     // Set initial invisible states
-                    gsap.set(newsletterText, { opacity: 0, y: 30 });
-                    gsap.set(newsletterForm, { opacity: 0, scale: 0.95 });
-                    gsap.set(footerLinks, { opacity: 0, y: 20 });
-                    gsap.set(socialLinks, { opacity: 0, scale: 0.8 });
-                    gsap.set(contactItems, { opacity: 0, x: -20 });
-                    gsap.set(footerLinksItems, { opacity: 0, x: -10 });
-                    gsap.set(bottomBar, { opacity: 0 });
+                    safeSet(newsletterText, { opacity: 0, y: 30 });
+                    safeSet(newsletterForm, { opacity: 0, scale: 0.95 });
+                    safeSet(footerLinks, { opacity: 0, y: 20 });
+                    safeSet(socialLinks, { opacity: 0, scale: 0.8 });
+                    safeSet(contactItems, { opacity: 0, x: -20 });
+                    safeSet(footerLinksItems, { opacity: 0, x: -10 });
+                    safeSet(bottomBar, { opacity: 0 });
 
                     // Animate newsletter text
-                    gsap.to(newsletterText, {
+                    safeTo(newsletterText, {
                         scrollTrigger: {
                             trigger: footerRef.current,
                             start: 'top 85%',
@@ -252,80 +277,84 @@ export const useScrollAnimations = ({
                     });
 
                     // Animate newsletter form
-                    gsap.to(newsletterForm, {
+                    safeTo(newsletterForm, {
                         scrollTrigger: {
                             trigger: footerRef.current,
                             start: 'top 85%',
-                            toggleActions: 'play none none none'
+                            toggleActions: 'play none none reverse'
                         },
                         opacity: 1,
                         scale: 1,
                         duration: 0.8,
                         delay: 0.2,
-                        ease: 'power2.out'
+                        ease: 'power2.inOut'
                     });
 
                     // Animate footer link sections
                     footerLinks.forEach((section, index) => {
+                        if (!section) return;
                         gsap.to(section, {
                             scrollTrigger: {
                                 trigger: section,
                                 start: 'top 90%',
-                                toggleActions: 'play none none none'
+                                toggleActions: 'play none none reverse'
                             },
                             opacity: 1,
                             y: 0,
                             duration: 0.8,
                             delay: index * 0.1,
-                            ease: 'power2.out'
+                            ease: 'power2.inOut'
                         });
                     });
 
                     // Animate contact items
                     contactItems.forEach((item, index) => {
+                        if (!item) return;
                         gsap.to(item, {
                             scrollTrigger: {
                                 trigger: item,
                                 start: 'top 90%',
-                                toggleActions: 'play none none none'
+                                toggleActions: 'play none none reverse'
                             },
                             opacity: 1,
                             x: 0,
                             duration: 0.6,
                             delay: index * 0.1,
-                            ease: 'power2.out'
+                            ease: 'power2.inOut'
                         });
                     });
 
                     // Animate social links
                     socialLinks.forEach((link, index) => {
+                        if (!link) return;
                         gsap.to(link, {
                             scrollTrigger: {
                                 trigger: link,
                                 start: 'top 92%',
-                                toggleActions: 'play none none none'
+                                toggleActions: 'play none none reverse'
                             },
                             opacity: 1,
                             scale: 1,
                             duration: 0.5,
                             delay: index * 0.08,
-                            ease: 'back.out(1.7)'
+                            ease: 'power2.inOut'
                         });
                     });
 
                     // Animate footer link items
                     footerLinksItems.forEach((item, index) => {
+                        if (!item) return;
                         gsap.to(item, {
                             scrollTrigger: {
                                 trigger: item,
                                 start: 'top 92%',
-                                toggleActions: 'play none none none'
+                                toggleActions: 'play none none reverse'
                             },
                             opacity: 1,
                             x: 0,
                             duration: 0.5,
                             delay: (index % 6) * 0.05, // Stagger within each column
-                            ease: 'power2.out'
+                            ease: 'power2.inOut'
                         });
                     });
 
@@ -335,11 +364,11 @@ export const useScrollAnimations = ({
                             scrollTrigger: {
                                 trigger: bottomBar,
                                 start: 'top 95%',
-                                toggleActions: 'play none none none'
+                                toggleActions: 'play none none reverse'
                             },
                             opacity: 1,
                             duration: 0.6,
-                            ease: 'power2.out'
+                            ease: 'power2.inOut'
                         });
                     }
                 }
